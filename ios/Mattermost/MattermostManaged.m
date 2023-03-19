@@ -8,7 +8,7 @@
 
 #import "MattermostManaged.h"
 #import "CreateThumbnail.h"
-#import "Mattermost-Swift.h"
+#import "VPS_Talk-Swift.h"
 
 @implementation MattermostManaged
 

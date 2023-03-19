@@ -1,5 +1,5 @@
 
-#import "Mattermost-Swift.h"
+#import "VPS_Talk-Swift.h"
 #import "NotificationsModule.h"
 
 @implementation NotificationsModule

@@ -395,7 +395,7 @@ platform :ios do
     )
 
     # Set the notification service extension bundle identifier
-    notification_bundle_id = ENV['NOTIFICATION_SERVICE_IDENTIFIER'] || 'com.vps.lcnktalk.NotificationService'
+    notification_bundle_id = ENV['NOTIFICATION_SERVICE_IDENTIFIER'] || 'com.vps.lcnktalk.NotificationService2'
     update_app_identifier(
         xcodeproj: './ios/Mattermost.xcodeproj',
         plist_path: 'NotificationService/Info.plist',
@@ -404,12 +404,12 @@ platform :ios do
 
     find_replace_string(
         path_to_file: './ios/Mattermost.xcodeproj/project.pbxproj',
-        old_string: 'com.vps.lcnktalk.NotificationService',
+        old_string: 'com.vps.lcnktalk.NotificationService2',
         new_string: notification_bundle_id
     )
 
     # Set the share extension bundle identifier
-    extension_bundle_id = ENV['EXTENSION_APP_IDENTIFIER'] || 'com.vps.lcnktalk.MattermostShare'
+    extension_bundle_id = ENV['EXTENSION_APP_IDENTIFIER'] || 'com.vps.lcnktalk.MattermostShare2'
     update_app_identifier(
         xcodeproj: './ios/Mattermost.xcodeproj',
         plist_path: 'MattermostShare/Info.plist',
@@ -418,7 +418,7 @@ platform :ios do
 
     find_replace_string(
         path_to_file: './ios/Mattermost.xcodeproj/project.pbxproj',
-        old_string: 'com.vps.lcnktalk.MattermostShare',
+        old_string: 'com.vps.lcnktalk.MattermostShare2',
         new_string: extension_bundle_id
     )
 

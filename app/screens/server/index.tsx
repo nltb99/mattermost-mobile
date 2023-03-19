@@ -22,6 +22,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {doPing} from '@actions/remote/general';
 import {fetchConfigAndLicense} from '@actions/remote/systems';
+import FormattedText from '@app/components/formatted_text';
 import Loading from '@app/components/loading';
 import LocalConfig from '@assets/config.json';
 import AppVersion from '@components/app_version';
@@ -53,7 +54,6 @@ import ServerHeader from './header';
 import type ClientError from '@client/rest/error';
 import type {DeepLinkWithData, LaunchProps} from '@typings/launch';
 import type {AvailableScreens} from '@typings/screens/navigation';
-import FormattedText from '@app/components/formatted_text';
 
 interface ServerProps extends LaunchProps {
     animated?: boolean;
@@ -189,7 +189,7 @@ const Server = ({
         }
 
         // TODO ?
-        setTimeout(() => handleConnect(serverUrl), 500);
+        setTimeout(() => handleConnect(serverUrl), 100);
         return;
 
         if (serverUrl && serverName && autoconnect) {

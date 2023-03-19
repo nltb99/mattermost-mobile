@@ -1,9 +1,9 @@
 {
   "name": "mattermost-mobile",
   "version": "0.0.1",
-  "description": "Mattermost Mobile with React Native",
+  "description": "Application chat VPS Talk",
   "repository": "git@github.com:mattermost/mattermost-mobile.git",
-  "author": "Mattermost, Inc.",
+  "author": "VPS Talk",
   "license": "Apache 2.0",
   "private": true,
   "dependencies": {
