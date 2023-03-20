@@ -172,9 +172,6 @@ const Server = ({
         }
 
         // TODO ?
-        // serverUrl = 'http://45.119.85.240:8065';
-        // serverUrl = 'https://finki.o2onetwork.one';
-        // serverUrl = 'https://takl.lcnk.xyz';
         serverUrl = 'https://talk.lcnk.xyz';
         serverName = 'admin';
         autoconnect = true;

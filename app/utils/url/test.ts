@@ -133,7 +133,7 @@ describe('UrlUtils', () => {
         const SITE_URL = `http://${URL_NO_PROTOCOL}`;
         const SERVER_URL = `http://${URL_NO_PROTOCOL}`;
         const SERVER_WITH_SUBPATH = `http://${URL_PATH_NO_PROTOCOL}`;
-        const DEEPLINK_URL_ROOT = `mattermost://${URL_NO_PROTOCOL}`;
+        const DEEPLINK_URL_ROOT = `vpstalk://${URL_NO_PROTOCOL}`;
 
         const tests = [
             {
