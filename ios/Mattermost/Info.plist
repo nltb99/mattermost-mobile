@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AppGroupIdentifier</key>
-	<string>group.com.vps.lcnktalk</string>
+	<string>group.com.vps.lcnktalk123</string>
 	<key>BundleEntryFilename</key>
 	<string>index.js</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -27,12 +27,15 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string></string>
 			<key>CFBundleURLName</key>
-			<string>com.mattermost</string>
+			<string>vpstalk</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>mattermost</string>
-				<string>mmauth</string>
+				<string>vpstalk</string>
 			</array>
 		</dict>
 	</array>

@@ -53,7 +53,7 @@ export REPLACE_ASSETS=false
 export MAIN_APP_IDENTIFIER=com.vps.lcnktalk
 export EXTENSION_APP_IDENTIFIER=com.vps.lcnktalk.MattermostShare2
 export NOTIFICATION_SERVICE_IDENTIFIER=com.vps.lcnktalk.NotificationService2
-export IOS_APP_GROUP=group.com.vps.lcnktalk
+export IOS_APP_GROUP=group.com.vps.lcnktalk123
 export IOS_ICLOUD_CONTAINER=iCloud.com.vps.lcnktalk
 export IOS_BUILD_EXPORT_METHOD=app-store
 

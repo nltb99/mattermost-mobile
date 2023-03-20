@@ -464,7 +464,7 @@ platform :ios do
     )
 
     # Set the app group id to share data between the app and the extension
-    app_group_id = ENV['IOS_APP_GROUP'] || 'group.com.vps.lcnktalk'
+    app_group_id = ENV['IOS_APP_GROUP'] || 'group.com.vps.lcnktalk123'
     update_app_group_identifiers(
         entitlements_file: './ios/Mattermost/Mattermost.entitlements',
         app_group_identifiers: [app_group_id]
