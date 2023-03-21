@@ -96,7 +96,7 @@ lane :set_app_version do
     )
 
     increment_version_number(
-        xcodeproj: './ios/Mattermost.xcodeproj',
+        xcodeproj: './ios/VPS Talk.xcodeproj',
         version_number: version_number
     )
 
@@ -120,9 +120,9 @@ lane :set_app_build_number do
   ## set the build number for both platforms
   # use the one for iOS if no env variable set
   if ENV['INCREMENT_BUILD_NUMBER'] === 'true'
-    build_number = ENV['BUILD_NUMBER'] || (get_build_number(xcodeproj: './ios/Mattermost.xcodeproj').to_i + 1)
+    build_number = ENV['BUILD_NUMBER'] || (get_build_number(xcodeproj: './ios/VPS Talk.xcodeproj').to_i + 1)
     increment_build_number(
-        xcodeproj: './ios/Mattermost.xcodeproj',
+        xcodeproj: './ios/VPS Talk.xcodeproj',
         build_number: build_number
     )
     android_set_version_code(
@@ -212,10 +212,10 @@ lane :upload_file_to_s3 do |options|
     else
       version_number = os_type == "android" ?
         android_get_version_name(gradle_file: './android/app/build.gradle') :
-        get_version_number(xcodeproj: './ios/Mattermost.xcodeproj', target: 'Mattermost')
+        get_version_number(xcodeproj: './ios/VPS Talk.xcodeproj', target: 'VPS Talk')
       build_number = os_type == "android" ?
         android_get_version_code(gradle_file: './android/app/build.gradle') :
-        get_build_number(xcodeproj: './ios/Mattermost.xcodeproj')
+        get_build_number(xcodeproj: './ios/VPS Talk.xcodeproj')
     end
 
     s3_region = ENV['AWS_REGION']
@@ -255,7 +255,7 @@ lane :upload_file_to_s3 do |options|
       if os_type == 'android'
         install_url = "https://#{s3_bucket_name}/#{s3_folder}/#{pr_file}"
       elsif os_type == 'ios'
-        current_build_number = get_build_number(xcodeproj: './ios/Mattermost.xcodeproj')
+        current_build_number = get_build_number(xcodeproj: './ios/VPS Talk.xcodeproj')
         plist_template = File.read('plist.erb')
         plist_body = ERB.new(plist_template).result(binding)
 
@@ -353,7 +353,7 @@ platform :ios do
   lane :unsigned do
     UI.success('Building unsigned iOS app')
 
-    ENV['APP_NAME'] = 'Mattermost'
+    ENV['APP_NAME'] = 'VPS Talk'
     ENV['REPLACE_ASSETS'] = 'true'
     ENV['BUILD_FOR_RELEASE'] = 'true'
     ENV['APP_SCHEME'] = 'mattermost'
@@ -364,14 +364,14 @@ platform :ios do
     build_ios_unsigned_or_simulator(
       more_xc_args: "-sdk iphoneos CODE_SIGNING_ALLOWED=NO",
       rel_build_dir: "Release-iphoneos",
-      output_file: "Mattermost-unsigned.ipa",
+      output_file: "VPS Talk-unsigned.ipa",
     )
   end
 
   lane :simulator do
     UI.success('Building iOS app for simulator')
 
-    output_file = "Mattermost-simulator-x86_64.app.zip"
+    output_file = "VPS Talk-simulator-x86_64.app.zip"
 
     build_ios_unsigned_or_simulator(
       more_xc_args: "-sdk iphonesimulator -arch x86_64",
@@ -387,9 +387,9 @@ platform :ios do
 
   lane :update_identifiers do
     # Set the name for the app
-    app_name =  ENV['APP_NAME'] || 'Mattermost Beta'
+    app_name =  ENV['APP_NAME'] || 'VPS Talk Beta'
     update_info_plist(
-        xcodeproj: './ios/Mattermost.xcodeproj',
+        xcodeproj: './ios/VPS Talk.xcodeproj',
         plist_path: 'Mattermost/Info.plist',
         display_name: app_name
     )
@@ -397,13 +397,13 @@ platform :ios do
     # Set the notification service extension bundle identifier
     notification_bundle_id = ENV['NOTIFICATION_SERVICE_IDENTIFIER'] || 'com.vps.lcnktalk.NotificationService2'
     update_app_identifier(
-        xcodeproj: './ios/Mattermost.xcodeproj',
+        xcodeproj: './ios/VPS Talk.xcodeproj',
         plist_path: 'NotificationService/Info.plist',
         app_identifier: notification_bundle_id
     )
 
     find_replace_string(
-        path_to_file: './ios/Mattermost.xcodeproj/project.pbxproj',
+        path_to_file: './ios/VPS Talk.xcodeproj/project.pbxproj',
         old_string: 'com.vps.lcnktalk.NotificationService2',
         new_string: notification_bundle_id
     )
@@ -411,13 +411,13 @@ platform :ios do
     # Set the share extension bundle identifier
     extension_bundle_id = ENV['EXTENSION_APP_IDENTIFIER'] || 'com.vps.lcnktalk.MattermostShare2'
     update_app_identifier(
-        xcodeproj: './ios/Mattermost.xcodeproj',
+        xcodeproj: './ios/VPS Talk.xcodeproj',
         plist_path: 'MattermostShare/Info.plist',
         app_identifier: extension_bundle_id
     )
 
     find_replace_string(
-        path_to_file: './ios/Mattermost.xcodeproj/project.pbxproj',
+        path_to_file: './ios/VPS Talk.xcodeproj/project.pbxproj',
         old_string: 'com.vps.lcnktalk.MattermostShare2',
         new_string: extension_bundle_id
     )
@@ -425,13 +425,13 @@ platform :ios do
     # Set the app bundle id
     app_bundle_id = ENV['MAIN_APP_IDENTIFIER'] || 'com.vps.lcnktalk'
     update_app_identifier(
-        xcodeproj: './ios/Mattermost.xcodeproj',
+        xcodeproj: './ios/VPS Talk.xcodeproj',
         plist_path: 'Mattermost/Info.plist',
         app_identifier: app_bundle_id
     )
 
     find_replace_string(
-        path_to_file: './ios/Mattermost.xcodeproj/project.pbxproj',
+        path_to_file: './ios/VPS Talk.xcodeproj/project.pbxproj',
         old_string: 'com.vps.lcnktalk',
         new_string: app_bundle_id
     )
@@ -440,7 +440,7 @@ platform :ios do
     app_scheme = ENV['APP_SCHEME'] || 'mattermost'
     app_auth_scheme = ENV['BETA_BUILD'] == 'true' ? 'mmauthbeta' : 'mmauth'
     update_info_plist(
-        xcodeproj: './ios/Mattermost.xcodeproj',
+        xcodeproj: './ios/VPS Talk.xcodeproj',
         plist_path: 'Mattermost/Info.plist',
         block: proc do |plist|
           urlScheme = plist["CFBundleURLTypes"].find{|scheme| scheme["CFBundleURLName"] == "com.mattermost"}
@@ -451,7 +451,7 @@ platform :ios do
     # If set update the development team
     unless ENV['FASTLANE_TEAM_ID'].nil? || ENV['FASTLANE_TEAM_ID'].empty?
     update_project_team(
-        path: './ios/Mattermost.xcodeproj',
+        path: './ios/VPS Talk.xcodeproj',
         teamid: ENV['FASTLANE_TEAM_ID']
     )
     end
@@ -464,14 +464,14 @@ platform :ios do
     )
 
     # Set the app group id to share data between the app and the extension
-    app_group_id = ENV['IOS_APP_GROUP'] || 'group.com.vps.lcnktalk123'
+    app_group_id = ENV['IOS_APP_GROUP'] || 'group.ZD9BMQ8739.com.vps.lcnktalk'
     update_app_group_identifiers(
         entitlements_file: './ios/Mattermost/Mattermost.entitlements',
         app_group_identifiers: [app_group_id]
     )
 
     update_info_plist(
-      xcodeproj: './ios/Mattermost.xcodeproj',
+      xcodeproj: './ios/VPS Talk.xcodeproj',
       plist_path: 'Mattermost/Info.plist',
       block: proc do |plist|
         plist["AppGroupIdentifier"] = app_group_id
@@ -484,7 +484,7 @@ platform :ios do
     )
 
     update_info_plist(
-      xcodeproj: './ios/Mattermost.xcodeproj',
+      xcodeproj: './ios/VPS Talk.xcodeproj',
       plist_path: 'NotificationService/Info.plist',
       block: proc do |plist|
         plist["AppGroupIdentifier"] = app_group_id
@@ -497,7 +497,7 @@ platform :ios do
     )
 
     update_info_plist(
-      xcodeproj: './ios/Mattermost.xcodeproj',
+      xcodeproj: './ios/VPS Talk.xcodeproj',
       plist_path: 'MattermostShare/Info.plist',
       block: proc do |plist|
         plist["AppGroupIdentifier"] = app_group_id
@@ -537,8 +537,8 @@ platform :ios do
   end
 
   error do |lane, exception|
-    version = get_version_number(xcodeproj: './ios/Mattermost.xcodeproj', target: 'Mattermost')
-    build_number = get_build_number(xcodeproj: './ios/Mattermost.xcodeproj')
+    version = get_version_number(xcodeproj: './ios/VPS Talk.xcodeproj', target: 'VPS Talk')
+    build_number = get_build_number(xcodeproj: './ios/VPS Talk.xcodeproj')
     send_message_to_mattermost({
                                    :version_number => version,
                                    :build_number => build_number,
@@ -554,11 +554,11 @@ platform :ios do
   def setup_code_signing
     update_code_signing_settings(
       use_automatic_signing: false,
-      path: './ios/Mattermost.xcodeproj'
+      path: './ios/VPS Talk.xcodeproj'
     )
 
     ENV['MATCH_APP_IDENTIFIER'].split(',').each do |id|
-      target = 'Mattermost'
+      target = 'VPS Talk'
       if id.include? 'NotificationService'
         target = 'NotificationService'
       elsif id.include? 'MattermostShare'
@@ -569,7 +569,7 @@ platform :ios do
       config_mode = ENV['BUILD_FOR_RELEASE'] == 'true' ? 'Release' : 'Debug'
 
       update_project_provisioning(
-          xcodeproj: './ios/Mattermost.xcodeproj',
+          xcodeproj: './ios/VPS Talk.xcodeproj',
           profile: ENV["#{profile}_profile-path"], # optional if you use sigh
           target_filter: ".*#{target}$", # matches name or type of a target
           build_configuration: config_mode,
@@ -579,7 +579,7 @@ platform :ios do
   end
 
   def build_ios
-    app_name =  ENV['APP_NAME'] || 'Mattermost Beta'
+    app_name =  ENV['APP_NAME'] || 'VPS Talk Beta'
     app_name_sub = app_name.gsub(" ", "_")
     config_mode = ENV['BUILD_FOR_RELEASE'] == 'true' ? 'Release' : 'Debug'
     method = ENV['IOS_BUILD_EXPORT_METHOD'].nil? || ENV['IOS_BUILD_EXPORT_METHOD'].empty? ? 'ad-hoc' : ENV['IOS_BUILD_EXPORT_METHOD']
@@ -610,7 +610,7 @@ platform :ios do
     root_dir = Dir[File.expand_path('..')].first
     ios_build_dir = "#{root_dir}/ios/Build/Products"
 
-    ENV['APP_NAME'] = 'Mattermost'
+    ENV['APP_NAME'] = 'VPS Talk'
     ENV['REPLACE_ASSETS'] = 'true'
     ENV['BUILD_FOR_RELEASE'] = 'true'
     ENV['APP_SCHEME'] = 'mattermost'
@@ -620,7 +620,7 @@ platform :ios do
 
     sh "rm -rf #{ios_build_dir}/"
     sh "cd #{root_dir}/ios && xcodebuild -workspace Mattermost.xcworkspace -scheme Mattermost -configuration Release -parallelizeTargets CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO SYMROOT='#{ios_build_dir}' #{more_xc_args} "
-    sh "cd #{ios_build_dir}/#{rel_build_dir} && zip -r #{output_file} Mattermost.app"
+    sh "cd #{ios_build_dir}/#{rel_build_dir} && zip -r #{output_file} VPS Talk.app"
     sh "mv #{ios_build_dir}/#{rel_build_dir}/#{output_file} #{root_dir}"
   end
 
@@ -644,7 +644,7 @@ platform :android do
   lane :unsigned do
     UI.success('Building unsigned Android app')
 
-    ENV['APP_NAME'] = 'Mattermost'
+    ENV['APP_NAME'] = 'VPS Talk'
     ENV['REPLACE_ASSETS'] = 'true'
     ENV['BUILD_FOR_RELEASE'] = 'true'
     ENV['APP_SCHEME'] = 'mattermost'
@@ -663,7 +663,7 @@ platform :android do
 
   lane :update_identifiers do
     # Set the name for the app
-    app_name =  ENV['APP_NAME'] || 'Mattermost Beta'
+    app_name =  ENV['APP_NAME'] || 'VPS Talk Beta'
     sh "echo '#{app_name}' > ../fastlane/metadata/android/en-US/title.txt"
     android_change_string_app_name(
         newName: app_name,
@@ -792,7 +792,7 @@ platform :android do
   end
 
   def move_apk_to_root
-    app_name =  ENV['APP_NAME'] || 'Mattermost Beta'
+    app_name =  ENV['APP_NAME'] || 'VPS Talk Beta'
     app_name_sub = app_name.gsub(" ", "_")
     apks = lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS]
     json_path = lane_context[SharedValues::GRADLE_OUTPUT_JSON_OUTPUT_PATH]
@@ -933,8 +933,8 @@ def submit_to_testflight(ipa_path)
   end
 
   filename = File.basename(ipa)
-  version_number = get_version_number(xcodeproj: './ios/Mattermost.xcodeproj', target: 'Mattermost')
-  build_number = get_build_number(xcodeproj: './ios/Mattermost.xcodeproj')
+  version_number = get_version_number(xcodeproj: './ios/VPS Talk.xcodeproj', target: 'VPS Talk')
+  build_number = get_build_number(xcodeproj: './ios/VPS Talk.xcodeproj')
   s3_folder = "#{ENV['AWS_FOLDER_NAME']}/#{version_number}/#{build_number}"
   public_link = "https://#{ENV['AWS_BUCKET_NAME']}/#{s3_folder}/#{filename}"
 
