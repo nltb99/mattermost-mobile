@@ -12,6 +12,7 @@ import NavigationStore from '@store/navigation_store';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
 import Account from './account';
+import Chat from './chat';
 import Home from './home';
 import Mentions from './mentions';
 import SavedMessages from './saved_messages';
@@ -61,6 +62,8 @@ const shadowOffset: [x: number | string, y: number | string] = [0, -0.5];
 const TabComponents: Record<string, any> = {
     Account,
     Home,
+    // TODO ? TabBar
+    Chat,
     Mentions,
     SavedMessages,
     Search,

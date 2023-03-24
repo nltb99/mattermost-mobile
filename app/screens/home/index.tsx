@@ -24,6 +24,7 @@ import RecentMentions from './recent_mentions';
 import SavedMessages from './saved_messages';
 import Search from './search';
 import TabBar from './tab_bar';
+import VPSSocialScreen from './vps_social/vps_social_webview';
 
 import type {DeepLinkWithData, LaunchProps} from '@typings/launch';
 
@@ -129,6 +130,11 @@ export default function HomeScreen(props: HomeProps) {
                             theme={theme}
                         />)}
                 >
+                    <Tab.Screen
+                        name={Screens.CHAT}
+                        component={VPSSocialScreen}
+                        options={{tabBarTestID: 'tab_bar.chat.tab', unmountOnBlur: false, freezeOnBlur: true, lazy: true}}
+                    />
                     <Tab.Screen
                         name={Screens.HOME}
                         options={{tabBarTestID: 'tab_bar.home.tab', unmountOnBlur: false, freezeOnBlur: true}}

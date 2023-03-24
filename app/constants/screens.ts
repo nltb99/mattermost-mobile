@@ -27,6 +27,7 @@ export const CREATE_ACCOUNT = 'CreateAccount';
 export const GALLERY = 'Gallery';
 export const GLOBAL_THREADS = 'GlobalThreads';
 export const HOME = 'Home';
+export const CHAT = 'Chat';
 export const INTEGRATION_SELECTOR = 'IntegrationSelector';
 export const INTERACTIVE_DIALOG = 'InteractiveDialog';
 export const INVITE = 'Invite';
@@ -98,6 +99,7 @@ export default {
     GALLERY,
     GLOBAL_THREADS,
     HOME,
+    CHAT,
     INTEGRATION_SELECTOR,
     INTERACTIVE_DIALOG,
     INVITE,
