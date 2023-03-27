@@ -13,3 +13,9 @@ export const HEADER_X_VERSION_ID = 'X-Version-Id';
 export const DEFAULT_LIMIT_BEFORE = 30;
 export const DEFAULT_LIMIT_AFTER = 30;
 export const PER_PAGE_DEFAULT = 60;
+
+export const API_VPS_SOCIAL = 'https://core.vuongphatvpn.vn';
+
+export const ENDPOINT_VPS_SOCIAL = {
+    LOGIN: '/api/auth/login',
+};

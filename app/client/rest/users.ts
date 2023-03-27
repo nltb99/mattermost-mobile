@@ -4,7 +4,9 @@
 import {General} from '@constants';
 import {buildQueryString} from '@utils/helpers';
 
-import {PER_PAGE_DEFAULT} from './constants';
+import {HttpService} from '../http-service.ts';
+
+import {ENDPOINT_VPS_SOCIAL, PER_PAGE_DEFAULT} from './constants';
 
 import type ClientBase from './base';
 
@@ -30,6 +32,10 @@ export interface ClientUsersMix {
     ) => Promise<any>;
     sendGetAllTeams: () => Promise<any>;
     setDefaultProfileImage: (userId: string) => Promise<any>;
+    checkUserExistInVPSSocial: (
+        loginId: string,
+        password: string
+    ) => Promise<UserProfile>;
     login: (
         loginId: string,
         password: string,
@@ -228,6 +234,23 @@ const ClientUsers = <TBase extends Constructor<ClientBase>>(
                 return this.doFetch(`${this.getUserRoute(userId)}/image`, {
                     method: 'delete',
                 });
+            };
+
+            checkUserExistInVPSSocial = async (
+                loginId: string,
+                password: string,
+            ) => {
+                const body = {
+                    username: loginId,
+                    password,
+                };
+
+                const data = await HttpService.post(
+                    ENDPOINT_VPS_SOCIAL.LOGIN,
+                    body,
+                );
+
+                return data;
             };
 
             login = async (

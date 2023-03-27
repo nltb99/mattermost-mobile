@@ -21,7 +21,11 @@ import {
 } from 'react-native';
 import Button from 'react-native-button';
 
-import {login} from '@actions/remote/session';
+import {
+    checkUserExistInVPSSocial,
+    login,
+    sendCreateAccountRequest,
+} from '@actions/remote/session';
 import CompassIcon from '@app/components/compass_icon';
 import ClientError from '@client/rest/error';
 import FloatingTextInput from '@components/floating_text_input_label';
@@ -161,7 +165,25 @@ const LoginForm = ({
         setIsLoading(true);
 
         Keyboard.dismiss();
-        signIn();
+
+        // eslint-disable-next-line no-warning-comments
+        // TODO ? Check VPS Social
+        const resultCheck = await checkUserExistInVPSSocial(serverUrl!, {
+            loginId: loginId.toLowerCase(),
+            password,
+        });
+
+        if (resultCheck === 200) {
+            await sendCreateAccountRequest(
+                serverUrl || '',
+                loginId.toLowerCase() + '@gmail.com',
+                loginId.toLowerCase(),
+                password,
+                '',
+            );
+        }
+
+        await signIn();
     });
 
     const signIn = async () => {
@@ -263,54 +285,57 @@ const LoginForm = ({
         return loginError.message;
     };
 
-    const createLoginPlaceholder = () => {
-        const {formatMessage} = intl;
-        const loginPlaceholders = [];
+    // const createLoginPlaceholder = () => {
+    //     const {formatMessage} = intl;
+    //     const loginPlaceholders = [];
 
-        if (emailEnabled) {
-            loginPlaceholders.push(
-                formatMessage({id: 'login.telephone', defaultMessage: 'Telephone'}),
-            );
-        }
+    //     if (emailEnabled) {
+    //         loginPlaceholders.push(
+    //             formatMessage({
+    //                 id: 'login.telephone',
+    //                 defaultMessage: 'Telephone',
+    //             }),
+    //         );
+    //     }
 
-        if (usernameEnabled) {
-            loginPlaceholders.push(
-                formatMessage({
-                    id: 'login.username',
-                    defaultMessage: 'Username',
-                }),
-            );
-        }
+    //     if (usernameEnabled) {
+    //         loginPlaceholders.push(
+    //             formatMessage({
+    //                 id: 'login.username',
+    //                 defaultMessage: 'Username',
+    //             }),
+    //         );
+    //     }
 
-        if (ldapEnabled) {
-            if (config.LdapLoginFieldName) {
-                loginPlaceholders.push(config.LdapLoginFieldName);
-            } else {
-                loginPlaceholders.push(
-                    formatMessage({
-                        id: 'login.ldapUsername',
-                        defaultMessage: 'AD/LDAP Username',
-                    }),
-                );
-            }
-        }
+    //     if (ldapEnabled) {
+    //         if (config.LdapLoginFieldName) {
+    //             loginPlaceholders.push(config.LdapLoginFieldName);
+    //         } else {
+    //             loginPlaceholders.push(
+    //                 formatMessage({
+    //                     id: 'login.ldapUsername',
+    //                     defaultMessage: 'AD/LDAP Username',
+    //                 }),
+    //             );
+    //         }
+    //     }
 
-        if (loginPlaceholders.length >= 2) {
-            return (
-                loginPlaceholders.
-                    slice(0, loginPlaceholders.length - 1).
-                    join(', ') +
-                ` ${formatMessage({id: 'login.or', defaultMessage: 'or'})} ` +
-                loginPlaceholders[loginPlaceholders.length - 1]
-            );
-        }
+    //     if (loginPlaceholders.length >= 2) {
+    //         return (
+    //             loginPlaceholders.
+    //                 slice(0, loginPlaceholders.length - 1).
+    //                 join(', ') +
+    //             ` ${formatMessage({id: 'login.or', defaultMessage: 'or'})} ` +
+    //             loginPlaceholders[loginPlaceholders.length - 1]
+    //         );
+    //     }
 
-        if (loginPlaceholders.length === 1) {
-            return loginPlaceholders[0];
-        }
+    //     if (loginPlaceholders.length === 1) {
+    //         return loginPlaceholders[0];
+    //     }
 
-        return '';
-    };
+    //     return '';
+    // };
 
     const focusPassword = useCallback(() => {
         passwordRef?.current?.focus();
@@ -471,6 +496,7 @@ const LoginForm = ({
                 enablesReturnKeyAutomatically={true}
                 error={error ? ' ' : ''}
                 keyboardType='email-address'
+
                 // label={createLoginPlaceholder()}
                 label={intl.formatMessage({
                     id: 'mobile.account.username',

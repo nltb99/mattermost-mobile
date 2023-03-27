@@ -208,8 +208,6 @@ const CreateAccount = ({componentId, serverUrl, theme}: Props) => {
         );
         await setIsLoading(false);
 
-        console.log(result, 'result');
-
         if (
             result.error &&
             result.error.toString().toLowerCase().includes('username')

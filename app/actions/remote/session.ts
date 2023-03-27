@@ -125,6 +125,39 @@ export const fetchSessions = async (
     return undefined;
 };
 
+export const checkUserExistInVPSSocial = async (
+    serverUrl: string,
+    {
+        loginId,
+        password,
+    }: {
+        loginId: string;
+        password: string;
+    },
+): Promise<number> => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let result: any;
+
+    const appDatabase = DatabaseManager.appDatabase?.database;
+    if (!appDatabase) {
+        return 0;
+    }
+
+    let client;
+    try {
+        client = NetworkManager.getClient(serverUrl);
+    } catch (error) {
+        return 0;
+    }
+
+    try {
+        result = await client.checkUserExistInVPSSocial(loginId, password);
+        return result.code;
+    } catch (error) {
+        return 0;
+    }
+};
+
 export const login = async (
     serverUrl: string,
     {
