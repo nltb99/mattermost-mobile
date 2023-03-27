@@ -1,9 +1,9 @@
 {
   "name": "mattermost-mobile",
   "version": "0.0.1",
-  "description": "Application chat VPS Talk",
+  "description": "Application chat VPS Network",
   "repository": "git@github.com:mattermost/mattermost-mobile.git",
-  "author": "VPS Talk",
+  "author": "VPS Network",
   "license": "Apache 2.0",
   "private": true,
   "dependencies": {

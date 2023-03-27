@@ -10,7 +10,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import <RNHWKeyboardEvent.h>
 
-#import "VPS_Talk-Swift.h"
+#import "VPS_Network-Swift.h"
 #import <os/log.h>
 
 @implementation AppDelegate
@@ -51,13 +51,13 @@ NSString* const NOTIFICATION_TEST_ACTION = @"test";
 
   [RNNotifications startMonitorNotifications];
 
-  self.moduleName = @"VPS Talk";
+  self.moduleName = @"VPS Network";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
   [ReactNativeNavigation bootstrapWithDelegate:self launchOptions:launchOptions];
 
-  os_log(OS_LOG_DEFAULT, "VPS Talk started!!");
+  os_log(OS_LOG_DEFAULT, "VPS Network started!!");
 
   return YES;
 }

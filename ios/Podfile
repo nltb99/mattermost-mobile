@@ -20,7 +20,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'VPS Talk' do
+target 'VPS Network' do
   # Pods for Mattermost
 
   config = use_native_modules!
