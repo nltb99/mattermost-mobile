@@ -6,51 +6,76 @@ import {FlatList, ListRenderItemInfo, StyleSheet, View} from 'react-native';
 
 import TeamItem from './team_item';
 
-export type TFunctionListProps = {};
-
-const keyExtractor = (item: any) => item.id;
-
-const renderTeam = ({item}: ListRenderItemInfo<any>) => {
-    return <TeamItem myTeam={item}/>;
+export type TVPSSocialFunction = {
+    id: string;
+    iconName: string;
+    uri: string;
 };
 
-export default function FunctionList() {
-    const myOrderedFunctions: any = [
+const keyExtractor = (item: TVPSSocialFunction) => item.id;
+
+const renderTeam = (
+    {item}: ListRenderItemInfo<TVPSSocialFunction>,
+    onChangeWebView: (item: TVPSSocialFunction) => void,
+) => {
+    return (
+        <TeamItem
+            hasUnreads={false}
+            onChangeWebView={() => onChangeWebView(item)}
+            myTeam={item}
+        />
+    );
+};
+
+export type TFunctionListProps = {
+    onChangeWebView: (item: TVPSSocialFunction) => void;
+};
+
+export default function FunctionList({onChangeWebView}: TFunctionListProps) {
+    const myOrderedFunctions: TVPSSocialFunction[] = [
         {
             id: '1',
             iconName: 'power-plug-outline',
+            uri: 'https://bds.vuongphatvpn.vn',
         },
         {
             id: '2',
-            iconName: 'timeline-text-outline',
+            iconName: 'hammer',
+            uri: 'https://dichvu.vuongphatvpn.vn',
         },
         {
             id: '3',
-            iconName: 'shield-alert-outline',
+            iconName: 'book-lock-outline',
+            uri: 'https://booking.vuongphatvpn.vn',
         },
         {
             id: '4',
-            iconName: 'view-grid-plus-outline',
+            iconName: 'eye-outline',
+            uri: 'https://music.vuongphatvpn.vn',
         },
         {
             id: '5',
             iconName: 'video-outline',
+            uri: 'https://video.vuongphatvpn.vn',
         },
         {
             id: '6',
             iconName: 'view-grid-plus-outline',
+            uri: 'https://game.vuongphatvpn.vn',
         },
     ];
 
     return (
         <View style={styles.container}>
             <FlatList
+                key={'id'}
+                id='id'
                 bounces={false}
                 contentContainerStyle={styles.contentContainer}
                 data={myOrderedFunctions}
                 fadingEdgeLength={30}
                 keyExtractor={keyExtractor}
-                renderItem={renderTeam}
+                renderItem={(item) => renderTeam(item, onChangeWebView)}
                 showsVerticalScrollIndicator={false}
             />
         </View>

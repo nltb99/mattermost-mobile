@@ -2,7 +2,11 @@
 // See LICENSE.txt for license information.
 
 import React, {useEffect} from 'react';
-import Animated, {useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
+import Animated, {
+    useAnimatedStyle,
+    useSharedValue,
+    withTiming,
+} from 'react-native-reanimated';
 
 import {TEAM_SIDEBAR_WIDTH} from '@constants/view';
 import {useTheme} from '@context/theme';
@@ -10,10 +14,13 @@ import {makeStyleSheetFromTheme} from '@utils/theme';
 
 import FunctionList from './function_list';
 
-type Props = {
+import type {TVPSSocialFunction} from './function_list/function_list';
+
+type TWebViewSideBarProps = {
     iconPad?: boolean;
     teamsCount: number;
-}
+    onChangeWebView: (item: TVPSSocialFunction) => void;
+};
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
     return {
@@ -34,7 +41,11 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
     };
 });
 
-export default function WebViewSideBar({iconPad, teamsCount}: Props) {
+export default function WebViewSideBar({
+    iconPad,
+    teamsCount,
+    onChangeWebView,
+}: TWebViewSideBarProps) {
     const initialWidth = teamsCount > 1 ? TEAM_SIDEBAR_WIDTH : 0;
     const width = useSharedValue(initialWidth);
     const marginTop = useSharedValue(iconPad ? 44 : 0);
@@ -47,9 +58,12 @@ export default function WebViewSideBar({iconPad, teamsCount}: Props) {
         };
     }, []);
 
-    const serverStyle = useAnimatedStyle(() => ({
-        marginTop: withTiming(marginTop.value, {duration: 350}),
-    }), []);
+    const serverStyle = useAnimatedStyle(
+        () => ({
+            marginTop: withTiming(marginTop.value, {duration: 350}),
+        }),
+        [],
+    );
 
     useEffect(() => {
         marginTop.value = iconPad ? 44 : 0;
@@ -62,7 +76,7 @@ export default function WebViewSideBar({iconPad, teamsCount}: Props) {
     return (
         <Animated.View style={[styles.container, transform]}>
             <Animated.View style={[styles.listContainer, serverStyle]}>
-                <FunctionList/>
+                <FunctionList onChangeWebView={onChangeWebView}/>
             </Animated.View>
         </Animated.View>
     );

@@ -11,6 +11,8 @@ import NetworkManager from '@managers/network_manager';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 import {typography} from '@utils/typography';
 
+import type {TVPSSocialFunction} from '../function_list';
+
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
     return {
         container: {
@@ -49,7 +51,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
 });
 
 type Props = {
-    item: any;
+    item: TVPSSocialFunction;
     selected: boolean;
     backgroundColor?: string;
     smallText?: boolean;
@@ -92,20 +94,16 @@ export default function FunctionIcon({
     );
     textTypography.fontFamily = 'Metropolis-SemiBold';
 
-    const teamIconContent = (
-        <CompassIcon
-            color={'white'}
-            name={item?.iconName || ''}
-            size={20}
-        />
-    );
-
     return (
         <View
             style={containerStyle}
             ref={ref}
         >
-            {teamIconContent}
+            <CompassIcon
+                color={changeOpacity(theme.sidebarText, 0.48)}
+                name={item?.iconName || ''}
+                size={20}
+            />
         </View>
     );
 }

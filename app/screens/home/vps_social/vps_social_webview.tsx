@@ -8,6 +8,7 @@ import {
     BackHandler,
     DeviceEventEmitter,
     StyleSheet,
+    Text,
     ToastAndroid,
     View,
 } from 'react-native';
@@ -19,6 +20,7 @@ import {
 } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
 
+import Loading from '@app/components/loading';
 import WebViewSideBar from '@app/components/webview_sidebar/webview_sidebar';
 import ConnectionBanner from '@components/connection_banner';
 import FreezeScreen from '@components/freeze_screen';
@@ -28,6 +30,8 @@ import NavigationStore from '@store/navigation_store';
 import {isMainActivity} from '@utils/helpers';
 
 import {VPSTopButton} from './vps_top_button';
+
+import type {TVPSSocialFunction} from '@app/components/webview_sidebar/function_list/function_list';
 
 export type TVPSSocialScreenProps = {};
 
@@ -40,6 +44,15 @@ const styles = StyleSheet.create({
     },
     flex: {
         flex: 1,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backroundColor: 'red',
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
     },
 });
 
@@ -58,6 +71,9 @@ const VPSSocialScreen = () => {
     const insets = useSafeAreaInsets();
     const params = route.params as {direction: string};
     const [showSidedbar, setShowSidebar] = useState<boolean>(true);
+    const [toggleBtnSideBar, setToggleBtnSideBar] = useState<boolean>(true);
+    const [currentWebviewSite, setCurrentWebviewSite] = useState<string>('https://dichvu.vuongphatvpn.vn');
+    const [loadingWebview, setLoadingWebview] = useState<boolean>(false);
 
     const handleBackPress = useCallback(() => {
         const isHomeScreen =
@@ -121,22 +137,32 @@ const VPSSocialScreen = () => {
         return () => back.remove();
     }, [handleBackPress]);
 
+    const onShowSideBar = () => {
+        setShowSidebar((e) => !e);
+        // eslint-disable-next-line max-nested-callbacks
+        setTimeout(() => {
+            setToggleBtnSideBar((e) => !e);
+        }, 200);
+    };
+
     useEffect(() => {
+        const eventTabPress = DeviceEventEmitter.addListener(
+            'tabPressVPSSocial',
+            onShowSideBar,
+        );
+
         return () => {
-            setShowSidebar(true);
+            eventTabPress.remove();
         };
-    }, []);
-
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            setShowSidebar(true);
-        });
-
-        return unsubscribe;
     }, [navigation]);
 
-    const onToggle = () => {
+    const onToggleSideBar = () => {
+        setToggleBtnSideBar((e) => !e);
         setShowSidebar((e) => !e);
+    };
+
+    const onChangeWebView = (item: TVPSSocialFunction) => {
+        setCurrentWebviewSite(item.uri);
     };
 
     return (
@@ -148,27 +174,48 @@ const VPSSocialScreen = () => {
             >
                 <ConnectionBanner/>
                 <View style={styles.content}>
-                    <VPSTopButton onPress={onToggle}/>
+                    {showSidedbar && toggleBtnSideBar && (
+                        <VPSTopButton
+                            theme={theme}
+                            onPress={onToggleSideBar}
+                        />
+                    )}
                     <Animated.View style={[styles.content, animated]}>
                         <WebViewSideBar
                             iconPad={true}
                             teamsCount={showSidedbar ? 2 : 0}
+                            onChangeWebView={onChangeWebView}
                         />
-                        <WebView
-                            automaticallyAdjustContentInsets={false}
-                            cacheEnabled={true}
-
-                            // onLoadEnd={onLoadEnd}
-                            // onMessage={messagingEnabled ? onMessage : undefined}
-                            // onNavigationStateChange={onNavigationStateChange}
-                            onShouldStartLoadWithRequest={() => true}
-                            ref={webView}
-                            source={{
-                                uri: 'https://social.lcnk.xyz/?token=https://social.lcnk.xyz/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDE5MWRkM2VhNWVkNjNlNjkxNDhjNzIiLCJpZCI6IjYwMTkxZGQzZWE1ZWQ2M2U2OTE0OGM3MiIsImVtYWlsIjoibzJvdmlldEBnbWFpbC5jb20iLCJ1c2VybmFtZSI6Im8yb3ZuIiwiZmlyc3ROYW1lIjoiTzJPIiwibGFzdE5hbWUiOiJWaeG7h3QgTmFtIiwiaWF0IjoxNjIzMDYxODEwLCJleHAiOjE2NTQ1OTc4MTB9.RTMkrwY6I7_CcMRFQwKGWa9dgMv0RtpP1qqVVWuO_ls',
-                            }}
-                            startInLoadingState={true}
-                            useSharedProcessPool={false}
-                        />
+                        {loadingWebview && (
+                            <View
+                                style={styles.loadingContainer}
+                                pointerEvents='none'
+                            >
+                                <Loading/>
+                                <Text style={{color: theme.sidebarText}}>Đang tải...</Text>
+                            </View>
+                        )}
+                        <View
+                            style={{flex: 1, opacity: loadingWebview ? 0 : 1}}
+                        >
+                            <WebView
+                                automaticallyAdjustContentInsets={false}
+                                cacheEnabled={true}
+                                onShouldStartLoadWithRequest={() => true}
+                                ref={webView}
+                                source={{
+                                    uri: currentWebviewSite,
+                                }}
+                                startInLoadingState={true}
+                                useSharedProcessPool={false}
+                                onLoadStart={() => {
+                                    setLoadingWebview(true);
+                                }}
+                                onLoadEnd={() => {
+                                    setLoadingWebview(false);
+                                }}
+                            />
+                        </View>
                     </Animated.View>
                 </View>
             </SafeAreaView>

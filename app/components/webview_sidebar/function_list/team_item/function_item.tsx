@@ -11,11 +11,14 @@ import {makeStyleSheetFromTheme} from '@utils/theme';
 
 import FunctionIcon from './function_icon';
 
+import type {TVPSSocialFunction} from '../function_list';
+
 type Props = {
-    myTeam: any;
+    myTeam: TVPSSocialFunction;
     hasUnreads: boolean;
     mentionCount: number;
     selected: boolean;
+    onChangeWebView: (item: TVPSSocialFunction) => void;
 };
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
@@ -58,6 +61,7 @@ export default function FunctionItem({
     hasUnreads,
     mentionCount,
     selected,
+    onChangeWebView,
 }: Props) {
     const theme = useTheme();
     const styles = getStyleSheet(theme);
@@ -90,11 +94,7 @@ export default function FunctionItem({
                 ]}
             >
                 <TouchableWithFeedback
-
-                    // onPress={() => handleTeamChange(serverUrl, team.id)}
-                    onPress={() => {
-                        //
-                    }}
+                    onPress={onChangeWebView}
                     type='opacity'
                 >
                     <FunctionIcon
