@@ -18,7 +18,7 @@ export const VPSTopButton = ({theme, onPress}: TVPSTopButtonProps) => {
             justifyContent: 'center',
             position: 'absolute',
             zIndex: 10,
-            top: 3,
+            bottom: 15,
             left: 12,
             width: 45,
             height: 45,

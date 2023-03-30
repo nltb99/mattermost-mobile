@@ -22,6 +22,7 @@ import WebView from 'react-native-webview';
 
 import Loading from '@app/components/loading';
 import WebViewSideBar from '@app/components/webview_sidebar/webview_sidebar';
+import {useJwtVPSSocial} from '@app/context/jwt_social';
 import ConnectionBanner from '@components/connection_banner';
 import FreezeScreen from '@components/freeze_screen';
 import {Navigation as NavigationConstants, Screens} from '@constants';
@@ -32,7 +33,7 @@ import {isMainActivity} from '@utils/helpers';
 import {VPSTopButton} from './vps_top_button';
 
 import type {TVPSSocialFunction} from '@app/components/webview_sidebar/function_list/function_list';
-import { useJwtVPSSocial } from '@app/context/jwt_social';
+
 
 export type TVPSSocialScreenProps = {};
 
@@ -175,15 +176,15 @@ const VPSSocialScreen = () => {
             >
                 <ConnectionBanner/>
                 <View style={styles.content}>
-                    {showSidedbar && toggleBtnSideBar && (
+                    {/* {showSidedbar && toggleBtnSideBar && (
                         <VPSTopButton
                             theme={theme}
                             onPress={onToggleSideBar}
                         />
-                    )}
+                    )} */}
                     <Animated.View style={[styles.content, animated]}>
                         <WebViewSideBar
-                            iconPad={true}
+                            iconPad={false}
                             teamsCount={showSidedbar ? 2 : 0}
                             onChangeWebView={onChangeWebView}
                         />
@@ -212,11 +213,15 @@ const VPSSocialScreen = () => {
                                 onLoadStart={() => {
                                     setLoadingWebview(true);
                                 }}
-                                onLoadEnd={() => {
+                                onLoad={() => {
                                     setLoadingWebview(false);
                                 }}
                             />
                         </View>
+                        <VPSTopButton
+                            theme={theme}
+                            onPress={onToggleSideBar}
+                        />
                     </Animated.View>
                 </View>
             </SafeAreaView>
