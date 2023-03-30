@@ -3,6 +3,7 @@
 
 import React, {useCallback} from 'react';
 import {useIntl} from 'react-intl';
+import {DeviceEventEmitter} from 'react-native';
 
 import CompassIcon from '@components/compass_icon';
 import {Screens} from '@constants';
@@ -16,17 +17,30 @@ type Props = {
     canCreateChannels: boolean;
     canJoinChannels: boolean;
     canInvitePeople: boolean;
-}
+    canRefreshApp?: boolean;
+};
 
-const PlusMenuList = ({canCreateChannels, canJoinChannels, canInvitePeople}: Props) => {
+const PlusMenuList = ({
+    canCreateChannels,
+    canJoinChannels,
+    canInvitePeople,
+    canRefreshApp,
+}: Props) => {
     const intl = useIntl();
     const theme = useTheme();
 
     const browseChannels = useCallback(async () => {
         await dismissBottomSheet();
 
-        const title = intl.formatMessage({id: 'browse_channels.title', defaultMessage: 'Browse channels'});
-        const closeButton = CompassIcon.getImageSourceSync('close', 24, theme.sidebarHeaderTextColor);
+        const title = intl.formatMessage({
+            id: 'browse_channels.title',
+            defaultMessage: 'Browse channels',
+        });
+        const closeButton = CompassIcon.getImageSourceSync(
+            'close',
+            24,
+            theme.sidebarHeaderTextColor,
+        );
 
         showModal(Screens.BROWSE_CHANNELS, title, {
             closeButton,
@@ -36,15 +50,25 @@ const PlusMenuList = ({canCreateChannels, canJoinChannels, canInvitePeople}: Pro
     const createNewChannel = useCallback(async () => {
         await dismissBottomSheet();
 
-        const title = intl.formatMessage({id: 'mobile.create_channel.title', defaultMessage: 'New channel'});
+        const title = intl.formatMessage({
+            id: 'mobile.create_channel.title',
+            defaultMessage: 'New channel',
+        });
         showModal(Screens.CREATE_OR_EDIT_CHANNEL, title);
     }, [intl]);
 
     const openDirectMessage = useCallback(async () => {
         await dismissBottomSheet();
 
-        const title = intl.formatMessage({id: 'create_direct_message.title', defaultMessage: 'Create Direct Message'});
-        const closeButton = CompassIcon.getImageSourceSync('close', 24, theme.sidebarHeaderTextColor);
+        const title = intl.formatMessage({
+            id: 'create_direct_message.title',
+            defaultMessage: 'Create Direct Message',
+        });
+        const closeButton = CompassIcon.getImageSourceSync(
+            'close',
+            24,
+            theme.sidebarHeaderTextColor,
+        );
         showModal(Screens.CREATE_DIRECT_MESSAGE, title, {
             closeButton,
         });
@@ -59,33 +83,46 @@ const PlusMenuList = ({canCreateChannels, canJoinChannels, canInvitePeople}: Pro
         );
     }, [intl, theme]);
 
+    const onRefreshApp = () => {
+        DeviceEventEmitter.emit('RELAUNCH_APP');
+    };
+
     return (
         <>
-            {canJoinChannels &&
-            <PlusMenuItem
-                pickerAction='browseChannels'
-                onPress={browseChannels}
-            />
-            }
-            {canCreateChannels &&
-            <PlusMenuItem
-                pickerAction='createNewChannel'
-                onPress={createNewChannel}
-            />
-            }
+            {canJoinChannels && (
+                <PlusMenuItem
+                    pickerAction='browseChannels'
+                    onPress={browseChannels}
+                />
+            )}
+            {canCreateChannels && (
+                <PlusMenuItem
+                    pickerAction='createNewChannel'
+                    onPress={createNewChannel}
+                />
+            )}
             <PlusMenuItem
                 pickerAction='openDirectMessage'
                 onPress={openDirectMessage}
             />
-            {canInvitePeople &&
-            <>
-                <PlusMenuSeparator/>
-                <PlusMenuItem
-                    pickerAction='invitePeopleToTeam'
-                    onPress={invitePeopleToTeam}
-                />
-            </>
-            }
+            {canInvitePeople && (
+                <>
+                    <PlusMenuSeparator/>
+                    <PlusMenuItem
+                        pickerAction='invitePeopleToTeam'
+                        onPress={invitePeopleToTeam}
+                    />
+                </>
+            )}
+            {canRefreshApp && (
+                <>
+                    <PlusMenuSeparator/>
+                    <PlusMenuItem
+                        pickerAction='refreshApp'
+                        onPress={onRefreshApp}
+                    />
+                </>
+            )}
         </>
     );
 };

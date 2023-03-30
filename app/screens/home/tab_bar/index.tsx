@@ -61,8 +61,8 @@ const shadowOffset: [x: number | string, y: number | string] = [0, -0.5];
 
 const TabComponents: Record<string, any> = {
     Account,
-    Home,
     // TODO ? TabBar
+    Home,
     Chat,
     Mentions,
     SavedMessages,

@@ -1,6 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import {registerDeviceEventEmmiterListeners} from '@app/screens/eventemmiter';
 import DatabaseManager from '@database/manager';
 import {getAllServerCredentials} from '@init/credentials';
 import {initialLaunch} from '@init/launch';
@@ -17,24 +18,30 @@ let alreadyInitialized = false;
 let serverCredentials: ServerCredential[];
 
 // Fallback Polyfill for Promise.allSettle
-Promise.allSettled = Promise.allSettled || (<T>(promises: Array<Promise<T>>) => Promise.all(
-    promises.map((p) => p.
-        then((value) => ({
-            status: 'fulfilled',
-            value,
-        })).
-        catch((reason) => ({
-            status: 'rejected',
-            reason,
-        })),
-    ),
-));
+Promise.allSettled =
+    Promise.allSettled ||
+    (<T>(promises: Array<Promise<T>>) =>
+        Promise.all(
+            promises.map((p) =>
+                p.
+                    then((value) => ({
+                        status: 'fulfilled',
+                        value,
+                    })).
+                    catch((reason) => ({
+                        status: 'rejected',
+                        reason,
+                    })),
+            ),
+        ));
 
 export async function initialize() {
     if (!alreadyInitialized) {
         alreadyInitialized = true;
         serverCredentials = await getAllServerCredentials();
-        const serverUrls = serverCredentials.map((credential) => credential.serverUrl);
+        const serverUrls = serverCredentials.map(
+            (credential) => credential.serverUrl,
+        );
 
         await DatabaseManager.init(serverUrls);
         await NetworkManager.init(serverCredentials);
@@ -51,6 +58,7 @@ export async function start() {
     PushNotifications.init(serverCredentials.length > 0);
 
     registerNavigationListeners();
+    registerDeviceEventEmmiterListeners();
     registerScreens();
     await initialLaunch();
     WebsocketManager.init(serverCredentials);

@@ -133,13 +133,14 @@ const ChannelListHeader = ({
                     canCreateChannels={canCreateChannels}
                     canJoinChannels={canJoinChannels}
                     canInvitePeople={canInvitePeople}
+                    canRefreshApp={true}
                 />
             );
         };
 
         const closeButtonId = 'close-plus-menu';
-        let items = 1;
-        let separators = 0;
+        let items = 2;
+        let separators = 1;
 
         if (canCreateChannels) {
             items += 1;
