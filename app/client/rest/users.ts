@@ -35,7 +35,7 @@ export interface ClientUsersMix {
     checkUserExistInVPSSocial: (
         loginId: string,
         password: string
-    ) => Promise<UserProfile>;
+    ) => Promise<any>;
     login: (
         loginId: string,
         password: string,

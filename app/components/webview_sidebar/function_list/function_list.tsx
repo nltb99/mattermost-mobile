@@ -4,6 +4,8 @@
 import React from 'react';
 import {FlatList, ListRenderItemInfo, StyleSheet, View} from 'react-native';
 
+import {useJwtVPSSocial} from '@app/context/jwt_social';
+
 import TeamItem from './team_item';
 
 export type TVPSSocialFunction = {
@@ -32,36 +34,47 @@ export type TFunctionListProps = {
 };
 
 export default function FunctionList({onChangeWebView}: TFunctionListProps) {
+    const jwtToken = useJwtVPSSocial();
     const myOrderedFunctions: TVPSSocialFunction[] = [
         {
             id: '1',
-            iconName: 'power-plug-outline',
-            uri: 'https://bds.vuongphatvpn.vn',
+            iconName: 'play-box-multiple-outline',
+            uri: `https://social.vuongphatvpn.vn?token=${jwtToken}`,
         },
         {
             id: '2',
-            iconName: 'hammer',
-            uri: 'https://dichvu.vuongphatvpn.vn',
+            iconName: 'power-plug-outline',
+            uri: `https://bds.vuongphatvpn.vn?token=${jwtToken}`,
         },
         {
             id: '3',
-            iconName: 'book-lock-outline',
-            uri: 'https://booking.vuongphatvpn.vn',
+            iconName: 'hammer',
+            uri: `https://dichvu.vuongphatvpn.vn?token=${jwtToken}`,
         },
         {
             id: '4',
-            iconName: 'eye-outline',
-            uri: 'https://music.vuongphatvpn.vn',
+            iconName: 'book-lock-outline',
+            uri: `https://booking.vuongphatvpn.vn?token=${jwtToken}`,
         },
         {
             id: '5',
-            iconName: 'video-outline',
-            uri: 'https://video.vuongphatvpn.vn',
+            iconName: 'eye-outline',
+            uri: `https://music.vuongphatvpn.vn?token=${jwtToken}`,
         },
         {
             id: '6',
+            iconName: 'video-outline',
+            uri: `https://video.vuongphatvpn.vn?token=${jwtToken}`,
+        },
+        {
+            id: '7',
             iconName: 'view-grid-plus-outline',
-            uri: 'https://game.vuongphatvpn.vn',
+            uri: `https://khoahoc.vuongphatvpn.vn?token=${jwtToken}`,
+        },
+        {
+            id: '8',
+            iconName: 'webhook',
+            uri: 'https://news.vuongphatvpn.vn',
         },
     ];
 
@@ -75,7 +88,9 @@ export default function FunctionList({onChangeWebView}: TFunctionListProps) {
                 data={myOrderedFunctions}
                 fadingEdgeLength={30}
                 keyExtractor={keyExtractor}
-                renderItem={(item) => renderTeam(item, onChangeWebView)}
+                renderItem={(item: TVPSSocialFunction) =>
+                    renderTeam(item, onChangeWebView)
+                }
                 showsVerticalScrollIndicator={false}
             />
         </View>

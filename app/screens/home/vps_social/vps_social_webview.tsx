@@ -32,6 +32,7 @@ import {isMainActivity} from '@utils/helpers';
 import {VPSTopButton} from './vps_top_button';
 
 import type {TVPSSocialFunction} from '@app/components/webview_sidebar/function_list/function_list';
+import { useJwtVPSSocial } from '@app/context/jwt_social';
 
 export type TVPSSocialScreenProps = {};
 
@@ -64,7 +65,8 @@ const VPSSocialScreen = () => {
     const intl = useIntl();
 
     const webView = React.useRef<WebView>(null);
-
+    
+    const jwtToken = useJwtVPSSocial();
     const route = useRoute();
     const isFocused = useIsFocused();
     const navigation = useNavigation();
@@ -72,9 +74,8 @@ const VPSSocialScreen = () => {
     const params = route.params as {direction: string};
     const [showSidedbar, setShowSidebar] = useState<boolean>(true);
     const [toggleBtnSideBar, setToggleBtnSideBar] = useState<boolean>(true);
-    const [currentWebviewSite, setCurrentWebviewSite] = useState<string>('https://dichvu.vuongphatvpn.vn');
+    const [currentWebviewSite, setCurrentWebviewSite] = useState<string>(`https://social.vuongphatvpn.vn?token=${jwtToken}`);
     const [loadingWebview, setLoadingWebview] = useState<boolean>(false);
-
     const handleBackPress = useCallback(() => {
         const isHomeScreen =
             NavigationStore.getVisibleScreen() === Screens.HOME;

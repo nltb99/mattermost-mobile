@@ -1,8 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import {DeviceEventEmitter, Platform} from 'react-native';
+import {sign} from 'react-native-pure-jwt';
 
 import {Database, Events} from '@constants';
 import {SYSTEM_IDENTIFIERS} from '@constants/database';
@@ -194,6 +196,27 @@ export const login = async (
             ldapOnly,
         );
 
+        // TODO ? jwtToken
+        const result = await client.checkUserExistInVPSSocial(
+            loginId,
+            password,
+        );
+        if (result?.code === 200) {
+            const jwtToken = await sign(
+                {
+                    email: result?.data?.user?.email || '',
+                    username: result?.data?.user?.username || '',
+                    firstName: null,
+                    lastName: null,
+                },
+                'THISISUSEDTOSIGNANDVERIFYJWTTOKENSREPLACEITWITHYOUROWNSECRETITBEANYSTRING', // secret
+                {
+                    alg: 'HS256',
+                },
+            );
+            await AsyncStorage.setItem('jwtToken', jwtToken);
+        }
+
         const server = await DatabaseManager.createServerDatabase({
             config: {
                 dbName: serverUrl,
@@ -241,6 +264,7 @@ export const logout = async (
         try {
             const client = NetworkManager.getClient(serverUrl);
             await client.logout();
+            await AsyncStorage.clear();
         } catch (error) {
             // We want to log the user even if logging out from the server failed
             logWarning(

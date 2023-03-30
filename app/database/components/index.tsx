@@ -2,8 +2,10 @@
 // See LICENSE.txt for license information.
 
 import DatabaseProvider from '@nozbe/watermelondb/DatabaseProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {ComponentType, useEffect, useState} from 'react';
 
+import JwtVPSSocialProvider from '@app/context/jwt_social';
 import ServerProvider from '@context/server';
 import ThemeProvider from '@context/theme';
 import UserLocaleProvider from '@context/user_locale';
@@ -19,11 +21,14 @@ type State = {
     serverDisplayName: string;
 };
 
-export function withServerDatabase<T extends JSX.IntrinsicAttributes>(Component: ComponentType<T>): ComponentType<T> {
+export function withServerDatabase<T extends JSX.IntrinsicAttributes>(
+    Component: ComponentType<T>,
+): ComponentType<T> {
     return function ServerDatabaseComponent(props: T) {
         const [state, setState] = useState<State | undefined>();
+        const [jwtToken, setJwtToken] = useState<string>('');
 
-        const observer = (servers: ServersModel[]) => {
+        const observer = async (servers: ServersModel[]) => {
             const server = servers?.length ? servers.reduce((a, b) =>
                 (b.lastActiveAt > a.lastActiveAt ? b : a),
             ) : undefined;
@@ -39,6 +44,9 @@ export function withServerDatabase<T extends JSX.IntrinsicAttributes>(Component:
                         serverDisplayName: server.displayName,
                     });
                 }
+
+                const jwtString = await AsyncStorage.getItem('jwtToken');
+                setJwtToken(jwtString);
             } else {
                 setState(undefined);
             }
@@ -62,10 +70,17 @@ export function withServerDatabase<T extends JSX.IntrinsicAttributes>(Component:
                 key={state.serverUrl}
             >
                 <UserLocaleProvider database={state.database}>
-                    <ServerProvider server={{displayName: state.serverDisplayName, url: state.serverUrl}}>
-                        <ThemeProvider database={state.database}>
-                            <Component {...props}/>
-                        </ThemeProvider>
+                    <ServerProvider
+                        server={{
+                            displayName: state.serverDisplayName,
+                            url: state.serverUrl,
+                        }}
+                    >
+                        <JwtVPSSocialProvider token={{jwtToken}}>
+                            <ThemeProvider database={state.database}>
+                                <Component {...props}/>
+                            </ThemeProvider>
+                        </JwtVPSSocialProvider>
                     </ServerProvider>
                 </UserLocaleProvider>
             </DatabaseProvider>

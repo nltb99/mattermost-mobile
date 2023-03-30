@@ -73,7 +73,9 @@ Ask your server administrator if the server uses NGINX or another webserver as a
 ### Fix
 
 ```shell
-cd ./node_modules/react-native-gesture-handler/android/build.gradle
+code node_modules/react-native-gesture-handler/android/build.gradle
+// comment noMultipleInstancesAssertion (if (files.size() > 1))
 
-// noMultipleInstancesAssertion
+code node_modules/react-native-gesture-handler/RNGestureHandler.podspec 
+// comment (if libInstancesArray.length() > 1)
 ```
