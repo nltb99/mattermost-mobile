@@ -58,7 +58,6 @@ public class MainApplication extends NavigationApplication implements INotificat
         // packages.add(new MyReactNativePackage());
         packages.add(new RNNotificationsPackage(MainApplication.this));
 
-
         packages.add(
           new TurboReactPackage() {
                 @Override

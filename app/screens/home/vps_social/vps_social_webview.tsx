@@ -209,6 +209,7 @@ const VPSSocialScreen = () => {
                                     uri: currentWebviewSite,
                                 }}
                                 startInLoadingState={true}
+                                javaScriptEnabled={true}
                                 useSharedProcessPool={false}
                                 onLoadStart={() => {
                                     setLoadingWebview(true);

@@ -226,6 +226,8 @@ dependencies {
     androidTestImplementation('com.wix:detox:+')
     implementation project(':reactnativenotifications')
     implementation project(':watermelondb-jsi')
+
+    implementation project(':react-native-pure-jwt')
 }
 
 configurations.all {

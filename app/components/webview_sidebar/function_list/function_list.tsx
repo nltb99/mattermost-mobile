@@ -69,7 +69,7 @@ export default function FunctionList({onChangeWebView}: TFunctionListProps) {
         {
             id: '7',
             iconName: 'view-grid-plus-outline',
-            uri: `https://khoahoc.vuongphatvpn.vn?token=${jwtToken}`,
+            uri: `https://khoahoc.vuongphatvpn.vn?jwt=${jwtToken}`,
         },
         {
             id: '8',

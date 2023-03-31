@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 import React, {useMemo} from 'react';
 import {useIntl} from 'react-intl';
-import {Text, View} from 'react-native';
+import {DeviceEventEmitter, Text, View} from 'react-native';
 
 import TeamFlatList from '@components/team_list';
 import {useTheme} from '@context/theme';
@@ -40,12 +40,7 @@ type Props = {
     onPress: (id: string) => void;
     loading: boolean;
 };
-function TeamList({
-    teams,
-    onEndReached,
-    onPress,
-    loading,
-}: Props) {
+function TeamList({teams, onEndReached, onPress, loading}: Props) {
     const theme = useTheme();
     const styles = getStyleSheet(theme);
     const intl = useIntl();
@@ -55,11 +50,30 @@ function TeamList({
         return isTablet ? [styles.container, {maxWidth: 600, alignItems: 'center' as const}] : styles.container;
     }, [isTablet, styles]);
 
+    // TODO ? Custom join team with likenew account
+    const onCustomOnPress = (id: string) => {
+        onPress(id);
+        setTimeout(() => {
+            DeviceEventEmitter.emit('RELAUNCH_APP');
+        }, 500);
+    };
+
     return (
         <View style={containerStyle}>
             <View>
-                <Text style={styles.title}>{intl.formatMessage({id: 'select_team.title', defaultMessage: 'Select a team'})}</Text>
-                <Text style={styles.description}>{intl.formatMessage({id: 'select_team.description', defaultMessage: 'You are not yet a member of any teams. Select one below to get started.'})}</Text>
+                <Text style={styles.title}>
+                    {intl.formatMessage({
+                        id: 'select_team.title',
+                        defaultMessage: 'Select a team',
+                    })}
+                </Text>
+                <Text style={styles.description}>
+                    {intl.formatMessage({
+                        id: 'select_team.description',
+                        defaultMessage:
+                            'You are not yet a member of any teams. Select one below to get started.',
+                    })}
+                </Text>
             </View>
             {/* {canCreateTeam && ( // TODO https://mattermost.atlassian.net/browse/MM-43622
                 <>
@@ -72,7 +86,7 @@ function TeamList({
                 textColor={theme.sidebarText}
                 iconBackgroundColor={changeOpacity(theme.sidebarText, 0.16)}
                 iconTextColor={theme.sidebarText}
-                onPress={onPress}
+                onPress={onCustomOnPress}
                 onEndReached={onEndReached}
                 loading={loading}
             />
