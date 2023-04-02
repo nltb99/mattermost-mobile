@@ -201,21 +201,36 @@ export const login = async (
             loginId,
             password,
         );
+
+        let payloadToken = {
+            email: '',
+            username: '',
+        };
+
         if (result?.code === 200) {
-            const jwtToken = await sign(
-                {
-                    email: result?.data?.user?.email || '',
-                    username: result?.data?.user?.username || '',
-                    firstName: null,
-                    lastName: null,
-                },
-                'THISISUSEDTOSIGNANDVERIFYJWTTOKENSREPLACEITWITHYOUROWNSECRETITBEANYSTRING', // secret
-                {
-                    alg: 'HS256',
-                },
-            );
-            await AsyncStorage.setItem('jwtToken', jwtToken);
+            payloadToken = {
+                email: result?.data?.user?.email || '',
+                username: result?.data?.user?.username || '',
+            };
+        } else {
+            payloadToken = {
+                email: loginId + '@gmail.com',
+                username: loginId,
+            };
         }
+
+        const jwtToken = await sign(
+            {
+                firstName: null,
+                lastName: null,
+                ...payloadToken,
+            },
+            'THISISUSEDTOSIGNANDVERIFYJWTTOKENSREPLACEITWITHYOUROWNSECRETITBEANYSTRING', // secret
+            {
+                alg: 'HS256',
+            },
+        );
+        await AsyncStorage.setItem('jwtToken', jwtToken);
 
         const server = await DatabaseManager.createServerDatabase({
             config: {

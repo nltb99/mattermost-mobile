@@ -22,7 +22,6 @@ import WebView from 'react-native-webview';
 
 import Loading from '@app/components/loading';
 import WebViewSideBar from '@app/components/webview_sidebar/webview_sidebar';
-import {useJwtVPSSocial} from '@app/context/jwt_social';
 import ConnectionBanner from '@components/connection_banner';
 import FreezeScreen from '@components/freeze_screen';
 import {Navigation as NavigationConstants, Screens} from '@constants';
@@ -33,7 +32,6 @@ import {isMainActivity} from '@utils/helpers';
 import {VPSTopButton} from './vps_top_button';
 
 import type {TVPSSocialFunction} from '@app/components/webview_sidebar/function_list/function_list';
-
 
 export type TVPSSocialScreenProps = {};
 
@@ -66,17 +64,76 @@ const VPSSocialScreen = () => {
     const intl = useIntl();
 
     const webView = React.useRef<WebView>(null);
-    
-    const jwtToken = useJwtVPSSocial();
+
     const route = useRoute();
     const isFocused = useIsFocused();
     const navigation = useNavigation();
     const insets = useSafeAreaInsets();
     const params = route.params as {direction: string};
     const [showSidedbar, setShowSidebar] = useState<boolean>(true);
-    const [toggleBtnSideBar, setToggleBtnSideBar] = useState<boolean>(true);
-    const [currentWebviewSite, setCurrentWebviewSite] = useState<string>(`https://social.vuongphatvpn.vn?token=${jwtToken}`);
+    const [currentWebviewSite, setCurrentWebviewSite] = useState<string>('');
     const [loadingWebview, setLoadingWebview] = useState<boolean>(false);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [myOrderedFunctions, __] = useState<TVPSSocialFunction[]>([
+        {
+            id: '1',
+            iconName: 'play-box-multiple-outline',
+            uri: 'https://social.vuongphatvpn.vn',
+            params: '?token=',
+            selected: true,
+        },
+        {
+            id: '2',
+            iconName: 'power-plug-outline',
+            uri: 'https://bds.vuongphatvpn.vn',
+            params: '?token=',
+            selected: false,
+        },
+        {
+            id: '3',
+            iconName: 'hammer',
+            uri: 'https://dichvu.vuongphatvpn.vn',
+            params: '?token=',
+            selected: false,
+        },
+        {
+            id: '4',
+            iconName: 'book-lock-outline',
+            uri: 'https://booking.vuongphatvpn.vn',
+            params: '?token=',
+            selected: false,
+        },
+        {
+            id: '5',
+            iconName: 'eye-outline',
+            uri: 'https://music.vuongphatvpn.vn',
+            params: '?token=',
+            selected: false,
+        },
+        {
+            id: '6',
+            iconName: 'video-outline',
+            uri: 'https://video.vuongphatvpn.vn',
+            params: '?token=',
+            selected: false,
+        },
+        {
+            id: '7',
+            iconName: 'view-grid-plus-outline',
+            uri: 'https://khoahoc.vuongphatvpn.vn',
+            params: '?jwt=',
+            selected: false,
+        },
+        {
+            id: '8',
+            iconName: 'webhook',
+            uri: 'https://news.vuongphatvpn.vn',
+            params: '',
+            selected: false,
+        },
+    ]);
+
     const handleBackPress = useCallback(() => {
         const isHomeScreen =
             NavigationStore.getVisibleScreen() === Screens.HOME;
@@ -141,10 +198,6 @@ const VPSSocialScreen = () => {
 
     const onShowSideBar = () => {
         setShowSidebar((e) => !e);
-        // eslint-disable-next-line max-nested-callbacks
-        setTimeout(() => {
-            setToggleBtnSideBar((e) => !e);
-        }, 200);
     };
 
     useEffect(() => {
@@ -159,12 +212,23 @@ const VPSSocialScreen = () => {
     }, [navigation]);
 
     const onToggleSideBar = () => {
-        setToggleBtnSideBar((e) => !e);
         setShowSidebar((e) => !e);
     };
 
-    const onChangeWebView = (item: TVPSSocialFunction) => {
-        setCurrentWebviewSite(item.uri);
+    const onChangeWebView = (
+        item: TVPSSocialFunction,
+        token: string,
+        check?: false,
+    ) => {
+        if (!check) {
+            // eslint-disable-next-line array-callback-return
+            myOrderedFunctions.map((e) => {
+                e.selected = false;
+            });
+        }
+        item.selected = true;
+        const endpoint = item.params ? item.params + token : '';
+        setCurrentWebviewSite(item.uri + endpoint);
     };
 
     return (
@@ -176,16 +240,11 @@ const VPSSocialScreen = () => {
             >
                 <ConnectionBanner/>
                 <View style={styles.content}>
-                    {/* {showSidedbar && toggleBtnSideBar && (
-                        <VPSTopButton
-                            theme={theme}
-                            onPress={onToggleSideBar}
-                        />
-                    )} */}
                     <Animated.View style={[styles.content, animated]}>
                         <WebViewSideBar
                             iconPad={false}
                             teamsCount={showSidedbar ? 2 : 0}
+                            myOrderedFunctions={myOrderedFunctions}
                             onChangeWebView={onChangeWebView}
                         />
                         {loadingWebview && (
@@ -194,7 +253,9 @@ const VPSSocialScreen = () => {
                                 pointerEvents='none'
                             >
                                 <Loading/>
-                                <Text style={{color: theme.sidebarText}}>Đang tải...</Text>
+                                <Text style={{color: theme.sidebarText}}>
+                                    Đang tải...
+                                </Text>
                             </View>
                         )}
                         <View
@@ -205,9 +266,7 @@ const VPSSocialScreen = () => {
                                 cacheEnabled={true}
                                 onShouldStartLoadWithRequest={() => true}
                                 ref={webView}
-                                source={{
-                                    uri: currentWebviewSite,
-                                }}
+                                source={{uri: currentWebviewSite}}
                                 startInLoadingState={true}
                                 javaScriptEnabled={true}
                                 useSharedProcessPool={false}

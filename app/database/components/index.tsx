@@ -28,7 +28,7 @@ export function withServerDatabase<T extends JSX.IntrinsicAttributes>(
         const [state, setState] = useState<State | undefined>();
         const [jwtToken, setJwtToken] = useState<string>('');
 
-        const observer = async (servers: ServersModel[]) => {
+        const observer = (servers: ServersModel[]) => {
             const server = servers?.length ? servers.reduce((a, b) =>
                 (b.lastActiveAt > a.lastActiveAt ? b : a),
             ) : undefined;
@@ -45,8 +45,10 @@ export function withServerDatabase<T extends JSX.IntrinsicAttributes>(
                     });
                 }
 
-                const jwtString = await AsyncStorage.getItem('jwtToken');
-                setJwtToken(jwtString);
+                setTimeout(async () => {
+                    const jwtString = await AsyncStorage.getItem('jwtToken');
+                    setJwtToken(jwtString || '');
+                }, 500);
             } else {
                 setState(undefined);
             }

@@ -531,7 +531,7 @@ PODS:
     - React-Core
   - RNFastImage (8.6.3):
     - React-Core
-    - SDWebImage (~> 5.11.1)
+    - SDWebImage (~> 5.12.3)
     - SDWebImageWebPCoder (~> 0.8.4)
   - RNFileViewer (2.1.5):
     - React-Core
@@ -590,9 +590,9 @@ PODS:
   - RNVectorIcons (9.2.0):
     - React-Core
   - Rudder (1.6.4)
-  - SDWebImage (5.11.1):
-    - SDWebImage/Core (= 5.11.1)
-  - SDWebImage/Core (5.11.1)
+  - SDWebImage (5.12.6):
+    - SDWebImage/Core (= 5.12.6)
+  - SDWebImage/Core (5.12.6)
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
@@ -1025,7 +1025,7 @@ SPEC CHECKSUMS:
   RNCClipboard: 2834e1c4af68697089cdd455ee4a4cdd198fa7dd
   RNDateTimePicker: 00247f26c34683c80be94207f488f6f13448586e
   RNDeviceInfo: 4701f0bf2a06b34654745053db0ce4cb0c53ada7
-  RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
+  RNFastImage: 0ee8f7e39df8190d3ca3a5b0c4ea0109c0ff132e
   RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
@@ -1041,7 +1041,7 @@ SPEC CHECKSUMS:
   RNSVG: c1e76b81c76cdcd34b4e1188852892dc280eb902
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   Rudder: 7c080303528ea612f58c9f9e8fcfab92b5dbcca8
-  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  SDWebImage: a47aea9e3d8816015db4e523daff50cfd294499d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   Sentry: 4c9babff9034785067c896fd580b1f7de44da020
   simdjson: c96317b3a50dff3468a42f586ab7ed22c6ab2fd9

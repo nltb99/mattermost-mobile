@@ -18,7 +18,7 @@ type Props = {
     hasUnreads: boolean;
     mentionCount: number;
     selected: boolean;
-    onChangeWebView: (item: TVPSSocialFunction) => void;
+    onChangeWebView: any;
 };
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
@@ -60,7 +60,6 @@ export default function FunctionItem({
     myTeam,
     hasUnreads,
     mentionCount,
-    selected,
     onChangeWebView,
 }: Props) {
     const theme = useTheme();
@@ -90,7 +89,7 @@ export default function FunctionItem({
             <View
                 style={[
                     styles.container,
-                    selected ? styles.containerSelected : undefined,
+                    myTeam.selected ? styles.containerSelected : undefined,
                 ]}
             >
                 <TouchableWithFeedback
@@ -99,13 +98,13 @@ export default function FunctionItem({
                 >
                     <FunctionIcon
                         item={myTeam}
-                        selected={selected}
+                        selected={myTeam.selected}
                     />
                 </TouchableWithFeedback>
             </View>
             <Badge
                 borderColor={theme.sidebarHeaderBg}
-                visible={hasBadge && !selected}
+                visible={hasBadge && !myTeam.selected}
                 style={badgeStyle}
                 value={value}
             />

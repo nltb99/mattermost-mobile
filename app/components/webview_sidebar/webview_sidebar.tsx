@@ -19,7 +19,8 @@ import type {TVPSSocialFunction} from './function_list/function_list';
 type TWebViewSideBarProps = {
     iconPad?: boolean;
     teamsCount: number;
-    onChangeWebView: (item: TVPSSocialFunction) => void;
+    myOrderedFunctions: TVPSSocialFunction[];
+    onChangeWebView: any;
 };
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
@@ -44,6 +45,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
 export default function WebViewSideBar({
     iconPad,
     teamsCount,
+    myOrderedFunctions,
     onChangeWebView,
 }: TWebViewSideBarProps) {
     const initialWidth = teamsCount > 1 ? TEAM_SIDEBAR_WIDTH : 0;
@@ -76,7 +78,10 @@ export default function WebViewSideBar({
     return (
         <Animated.View style={[styles.container, transform]}>
             <Animated.View style={[styles.listContainer, serverStyle]}>
-                <FunctionList onChangeWebView={onChangeWebView}/>
+                <FunctionList
+                    onChangeWebView={onChangeWebView}
+                    myOrderedFunctions={myOrderedFunctions}
+                />
             </Animated.View>
         </Animated.View>
     );
