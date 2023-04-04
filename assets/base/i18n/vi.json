@@ -1023,6 +1023,7 @@
     "mobile.account.team_code_not_found": "Mã mời không tồn tại",
     "mobile.account.require_username": "Hãy nhập username",
     "mobile.account.require_password": "Hãy nhập mật khẩu",
-    "login.telephone":"Số điện thoại",
-    "application.refresh_app": "Tải lại ứng dụng"
+    "login.telephone": "Số điện thoại",
+    "application.refresh_app": "Tải lại ứng dụng",
+    "chat_screen.direct_message": "Trò chuyện"
 }

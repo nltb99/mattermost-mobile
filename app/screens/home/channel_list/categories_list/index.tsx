@@ -2,8 +2,12 @@
 // See LICENSE.txt for license information.
 
 import React, {useEffect} from 'react';
-import {useWindowDimensions} from 'react-native';
-import Animated, {useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
+import {View, useWindowDimensions} from 'react-native';
+import Animated, {
+    useAnimatedStyle,
+    useSharedValue,
+    withTiming,
+} from 'react-native-reanimated';
 
 import ThreadsButton from '@components/threads_button';
 import {TABLET_SIDEBAR_WIDTH, TEAM_SIDEBAR_WIDTH} from '@constants/view';
@@ -20,9 +24,11 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     container: {
         flex: 1,
         backgroundColor: theme.sidebarBg,
+        paddingTop: 10,
+    },
+    containerPadding: {
         paddingLeft: 18,
         paddingRight: 20,
-        paddingTop: 10,
     },
 }));
 
@@ -37,12 +43,19 @@ const getTabletWidth = (teamsCount: number) => {
     return TABLET_SIDEBAR_WIDTH - (teamsCount > 1 ? TEAM_SIDEBAR_WIDTH : 0);
 };
 
-const CategoriesList = ({channelsCount, iconPad, isCRTEnabled, teamsCount}: ChannelListProps) => {
+const CategoriesList = ({
+    channelsCount,
+    iconPad,
+    isCRTEnabled,
+    teamsCount,
+}: ChannelListProps) => {
     const theme = useTheme();
     const styles = getStyleSheet(theme);
     const {width} = useWindowDimensions();
     const isTablet = useIsTablet();
-    const tabletWidth = useSharedValue(isTablet ? getTabletWidth(teamsCount) : 0);
+    const tabletWidth = useSharedValue(
+        isTablet ? getTabletWidth(teamsCount) : 0,
+    );
 
     useEffect(() => {
         if (isTablet) {
@@ -63,12 +76,14 @@ const CategoriesList = ({channelsCount, iconPad, isCRTEnabled, teamsCount}: Chan
     let content;
 
     if (channelsCount < 1) {
-        content = (<LoadChannelsError/>);
+        content = <LoadChannelsError/>;
     } else {
         content = (
             <>
-                <SubHeader/>
-                {isCRTEnabled && <ThreadsButton/>}
+                <View style={[styles.containerPadding]}>
+                    <SubHeader/>
+                    {isCRTEnabled && <ThreadsButton/>}
+                </View>
                 <Categories/>
             </>
         );
@@ -76,9 +91,9 @@ const CategoriesList = ({channelsCount, iconPad, isCRTEnabled, teamsCount}: Chan
 
     return (
         <Animated.View style={[styles.container, tabletStyle]}>
-            <ChannelListHeader
-                iconPad={iconPad}
-            />
+            <View style={[styles.containerPadding]}>
+                <ChannelListHeader iconPad={iconPad}/>
+            </View>
             {content}
         </Animated.View>
     );
