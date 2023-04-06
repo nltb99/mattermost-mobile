@@ -165,7 +165,11 @@ const Categories = ({categories, onlyUnreads, unreadsOnTop}: Props) => {
                         tabBarScrollEnabled: true,
                         tabBarBounces: true,
                         tabBarInactiveTintColor: theme.sidebarText,
-                        tabBarActiveTintColor: theme.buttonBg,
+                        tabBarActiveTintColor: theme.mentionHighlightBg,
+                        tabBarStyle: {backgroundColor: theme.sidebarBg},
+                        tabBarIndicatorStyle: {
+                            backgroundColor: theme.mentionHighlightBg,
+                        },
                     }}
                 >
                     <Tab.Screen

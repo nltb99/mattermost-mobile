@@ -263,13 +263,20 @@ const VPSSocialScreen = () => {
                         >
                             <WebView
                                 automaticallyAdjustContentInsets={false}
+                                javaScriptCanOpenWindowsAutomatically={true}
+                                allowFileAccessFromFileURLs={true}
+                                allowUniversalAccessFromFileURLs={true}
+                                allowsFullscreenVideo={true}
+                                allowsInlineMediaPlayback={true}
+                                allowFileAccess={true}
+                                geolocationEnabled={true}
                                 cacheEnabled={true}
                                 onShouldStartLoadWithRequest={() => true}
                                 ref={webView}
                                 source={{uri: currentWebviewSite}}
                                 startInLoadingState={true}
                                 javaScriptEnabled={true}
-                                useSharedProcessPool={false}
+                                useSharedProcessPool={true}
                                 onLoadStart={() => {
                                     setLoadingWebview(true);
                                 }}
