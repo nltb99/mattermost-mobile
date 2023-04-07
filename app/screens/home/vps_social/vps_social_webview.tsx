@@ -22,6 +22,7 @@ import WebView from 'react-native-webview';
 
 import Loading from '@app/components/loading';
 import WebViewSideBar from '@app/components/webview_sidebar/webview_sidebar';
+import {VPS_WEB_VIEW_LINK} from '@app/utils/constants';
 import ConnectionBanner from '@components/connection_banner';
 import FreezeScreen from '@components/freeze_screen';
 import {Navigation as NavigationConstants, Screens} from '@constants';
@@ -75,64 +76,8 @@ const VPSSocialScreen = () => {
     const [loadingWebview, setLoadingWebview] = useState<boolean>(false);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [myOrderedFunctions, __] = useState<TVPSSocialFunction[]>([
-        {
-            id: '1',
-            iconName: 'play-box-multiple-outline',
-            uri: 'https://social.vuongphatvpn.vn',
-            params: '?token=',
-            selected: true,
-        },
-        {
-            id: '2',
-            iconName: 'power-plug-outline',
-            uri: 'https://bds.vuongphatvpn.vn',
-            params: '?token=',
-            selected: false,
-        },
-        {
-            id: '3',
-            iconName: 'hammer',
-            uri: 'https://dichvu.vuongphatvpn.vn',
-            params: '?token=',
-            selected: false,
-        },
-        {
-            id: '4',
-            iconName: 'book-lock-outline',
-            uri: 'https://booking.vuongphatvpn.vn',
-            params: '?token=',
-            selected: false,
-        },
-        {
-            id: '5',
-            iconName: 'eye-outline',
-            uri: 'https://music.vuongphatvpn.vn',
-            params: '?token=',
-            selected: false,
-        },
-        {
-            id: '6',
-            iconName: 'video-outline',
-            uri: 'https://video.vuongphatvpn.vn',
-            params: '?token=',
-            selected: false,
-        },
-        {
-            id: '7',
-            iconName: 'view-grid-plus-outline',
-            uri: 'https://khoahoc.vuongphatvpn.vn',
-            params: '?jwt=',
-            selected: false,
-        },
-        {
-            id: '8',
-            iconName: 'webhook',
-            uri: 'https://news.vuongphatvpn.vn',
-            params: '',
-            selected: false,
-        },
-    ]);
+    const [myOrderedFunctions, __] =
+        useState<TVPSSocialFunction[]>(VPS_WEB_VIEW_LINK);
 
     const handleBackPress = useCallback(() => {
         const isHomeScreen =

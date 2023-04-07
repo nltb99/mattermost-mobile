@@ -82,9 +82,9 @@ const CategoriesList = ({
             <>
                 <View style={[styles.containerPadding]}>
                     <SubHeader/>
-                    {isCRTEnabled && <ThreadsButton/>}
+                    {/* {isCRTEnabled && <ThreadsButton/>} */}
                 </View>
-                <Categories/>
+                <Categories isCRTEnabled={isCRTEnabled || false}/>
             </>
         );
     }

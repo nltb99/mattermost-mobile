@@ -1025,5 +1025,7 @@
     "mobile.account.require_password": "Hãy nhập mật khẩu",
     "login.telephone": "Số điện thoại",
     "application.refresh_app": "Tải lại ứng dụng",
-    "chat_screen.direct_message": "Trò chuyện"
+    "chat_screen.direct_message": "Trò chuyện",
+    "chat_screen.channel_tab": "Channel",
+    "chat_screen.subject_tab": "Chủ đề"
 }

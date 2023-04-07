@@ -5,6 +5,7 @@ import React, {useEffect} from 'react';
 import {FlatList, ListRenderItemInfo, StyleSheet, View} from 'react-native';
 
 import {useJwtVPSSocial} from '@app/context/jwt_social';
+import {VPS_WEB_VIEW_LINK} from '@app/utils/constants';
 
 import TeamItem from './team_item';
 
@@ -45,17 +46,7 @@ export default function FunctionList({
     const jwtToken = useJwtVPSSocial();
 
     useEffect(() => {
-        onChangeWebView(
-            {
-                id: '1',
-                iconName: 'play-box-multiple-outline',
-                uri: 'https://social.vuongphatvpn.vn',
-                params: '?token=',
-                selected: true,
-            },
-            jwtToken,
-            true,
-        );
+        onChangeWebView(VPS_WEB_VIEW_LINK[0], jwtToken, true);
     }, [jwtToken]);
 
     return (

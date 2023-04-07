@@ -9,6 +9,7 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import {switchToChannelById} from '@actions/remote/channel';
 import {useTheme} from '@app/context/theme';
 import Loading from '@components/loading';
+import ThreadsButton from '@components/threads_button';
 import {
     CHANNELS_CATEGORY,
     FAVORITES_CATEGORY,
@@ -30,6 +31,7 @@ type Props = {
     categories: CategoryModel[];
     onlyUnreads: boolean;
     unreadsOnTop: boolean;
+    isCRTEnabled: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -48,7 +50,12 @@ const styles = StyleSheet.create({
 const extractKey = (item: CategoryModel | 'UNREADS') =>
     (item === 'UNREADS' ? 'UNREADS' : item.id);
 
-const Categories = ({categories, onlyUnreads, unreadsOnTop}: Props) => {
+const Categories = ({
+    categories,
+    onlyUnreads,
+    unreadsOnTop,
+    isCRTEnabled,
+}: Props) => {
     const {formatMessage} = useIntl();
 
     const theme = useTheme();
@@ -174,7 +181,7 @@ const Categories = ({categories, onlyUnreads, unreadsOnTop}: Props) => {
                 >
                     <Tab.Screen
                         name={formatMessage({
-                            id: 'channel_list.channels_category',
+                            id: 'chat_screen.channel_tab',
                             defaultMessage: 'Channels',
                         })}
                         component={() => {
@@ -220,6 +227,21 @@ const Categories = ({categories, onlyUnreads, unreadsOnTop}: Props) => {
                             );
                         }}
                     />
+                    {isCRTEnabled && (
+                        <Tab.Screen
+                            name={formatMessage({
+                                id: 'chat_screen.subject_tab',
+                                defaultMessage: 'Subjects',
+                            })}
+                            component={() => {
+                                return (
+                                    <View style={{padding: 15}}>
+                                        <ThreadsButton/>
+                                    </View>
+                                );
+                            }}
+                        />
+                    )}
                     <Tab.Screen
                         name={formatMessage({
                             id: 'channel_list.favorites_category',
