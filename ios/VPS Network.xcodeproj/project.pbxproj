@@ -815,8 +815,8 @@
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
-				7FD4822A2864D73300A5B18B /* XCRemoteSwiftPackageReference "OpenGraph.git" */,
-				27C667A129523ECA00E590D5 /* XCRemoteSwiftPackageReference "sentry-cocoa.git" */,
+				7FD4822A2864D73300A5B18B /* XCRemoteSwiftPackageReference "OpenGraph" */,
+				27C667A129523ECA00E590D5 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -1135,7 +1135,7 @@
 				CODE_SIGN_ENTITLEMENTS = Mattermost/Mattermost.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 470;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = ZD9BMQ8739;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1150,7 +1150,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 0.0.5;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-DFB_SONARKIT_ENABLED=1",
@@ -1160,7 +1160,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vps.lcnktalk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vps.ios.lcnktalk;
 				PRODUCT_NAME = "VPS Network";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1183,7 +1183,7 @@
 				CODE_SIGN_ENTITLEMENTS = Mattermost/MattermostRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 470;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = ZD9BMQ8739;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1198,14 +1198,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 0.0.5;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vps.lcnktalk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vps.ios.lcnktalk;
 				PRODUCT_NAME = "VPS Network";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1236,7 +1236,7 @@
 				CODE_SIGN_ENTITLEMENTS = NotificationService/NotificationServiceDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 470;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZD9BMQ8739;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1247,14 +1247,14 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 0.0.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-DFB_SONARKIT_ENABLED=1",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vps.lcnktalk.NotificationService2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vps.ios.lcnktalk.NotificationService2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -1287,7 +1287,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 470;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ZD9BMQ8739;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1298,10 +1298,10 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 0.0.5;
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.vps.lcnktalk.NotificationService2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vps.ios.lcnktalk.NotificationService2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1333,7 +1333,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 470;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZD9BMQ8739;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1347,10 +1347,10 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 0.0.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vps.lcnktalk.MattermostShare2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vps.ios.lcnktalk.MattermostShare2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1383,7 +1383,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 470;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ZD9BMQ8739;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1397,9 +1397,9 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 0.0.5;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vps.lcnktalk.MattermostShare2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vps.ios.lcnktalk.MattermostShare2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -1553,7 +1553,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		27C667A129523ECA00E590D5 /* XCRemoteSwiftPackageReference "sentry-cocoa.git" */ = {
+		27C667A129523ECA00E590D5 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
 			requirement = {
@@ -1561,7 +1561,7 @@
 				kind = branch;
 			};
 		};
-		7FD4822A2864D73300A5B18B /* XCRemoteSwiftPackageReference "OpenGraph.git" */ = {
+		7FD4822A2864D73300A5B18B /* XCRemoteSwiftPackageReference "OpenGraph" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/satoshi-takano/OpenGraph.git";
 			requirement = {
@@ -1574,12 +1574,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		27C667A229523ECA00E590D5 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 27C667A129523ECA00E590D5 /* XCRemoteSwiftPackageReference "sentry-cocoa.git" */;
+			package = 27C667A129523ECA00E590D5 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
 		};
 		27C667A429523F0A00E590D5 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 27C667A129523ECA00E590D5 /* XCRemoteSwiftPackageReference "sentry-cocoa.git" */;
+			package = 27C667A129523ECA00E590D5 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
 		};
 		49AE370026D4455D00EF4E52 /* Gekidou */ = {
@@ -1596,7 +1596,7 @@
 		};
 		7FD4822B2864D73300A5B18B /* OpenGraph */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7FD4822A2864D73300A5B18B /* XCRemoteSwiftPackageReference "OpenGraph.git" */;
+			package = 7FD4822A2864D73300A5B18B /* XCRemoteSwiftPackageReference "OpenGraph" */;
 			productName = OpenGraph;
 		};
 /* End XCSwiftPackageProductDependency section */
