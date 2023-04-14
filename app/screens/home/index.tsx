@@ -167,7 +167,8 @@ export default function HomeScreen(props: HomeProps) {
                         />
                     )}
                 >
-                    <Tab.Screen
+                     {/* // TODO ? TabBar */}
+                    {/* <Tab.Screen
                         name={Screens.CHAT}
                         component={VPSSocialScreen}
                         options={{
@@ -175,7 +176,7 @@ export default function HomeScreen(props: HomeProps) {
                             unmountOnBlur: false,
                             freezeOnBlur: true,
                         }}
-                    />
+                    /> */}
                     <Tab.Screen
                         name={Screens.HOME}
                         options={{

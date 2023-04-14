@@ -63,7 +63,7 @@ const TabComponents: Record<string, any> = {
     Account,
     // TODO ? TabBar
     Home,
-    Chat,
+    // Chat,
     Mentions,
     SavedMessages,
     Search,
